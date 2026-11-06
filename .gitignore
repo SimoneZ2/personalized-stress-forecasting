@@ -1,0 +1,20 @@
+# data and generated artifacts
+dataset/
+*.npz
+*.csv
+*.pkl
+*.pt
+*.log
+pop_cache*/
+v5_*/
+logs*/
+
+# python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# editors
+.vscode/
+.idea/
