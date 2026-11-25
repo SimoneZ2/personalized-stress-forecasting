@@ -1,7 +1,9 @@
-# CES stress forecasting
+# Personalized Stress Forecasting from Pervasive Sensing and Sparse Self-Reports
+Abstract:
+Mobile and wearable devices offer the opportunity to monitor psychological states such as perceived stress, whose prevalence is high and growing especially among young individuals. While forecasting periods of high stress would enable preventive actions, the task is challenging. Indeed, stress is subjective and person-dependent, behavioral signals are only indirect indicators of it, and self-reports needed to personalize the forecasting system are burdensome to collect over time. In this paper, we propose a framework for forecasting future stress from passive sensing data and sparse self-reports. In particular, our system relies on an LSTM regressor operating on sequences of passive sensor data, which is personalized through online fine-tuning on self-reports requested once every few weeks. In parallel, a gradient boosting classifier is used to estimate the probability of a stress peak, defined with respect to the user's usual level, while a Correction module shifts the forecast accordingly. Extensive experiments on a large four-year smartphone sensing dataset of university students show that our system compares favorably with reference approaches despite relying on far fewer self-reports, and substantially reduces the error on peak weeks. Additional results on a second dataset, acquired with a commercial wearable device, provide preliminary evidence of portability across different student populations and sensing modalities.
 
-Code to reproduce the results of the paper (RQ1-RQ4): next-week stress forecasting from
-passive phone sensing and sparse self-reports on the College Experience Study (CES), with a
+
+Code to reproduce the results of the paper Personalized Stress Forecasting from Pervasive Sensing and Sparse Self-Reports (RQ1-RQ4): next-week stress forecasting from passive phone sensing and sparse self-reports on the College Experience Study (CES), with a
 personalized LSTM regressor and a GBM peak classifier that corrects the forecast on the
 weeks flagged as likely peaks.
 
