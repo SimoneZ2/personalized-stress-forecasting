@@ -31,16 +31,16 @@ class AdaptiveFlag:
         return self.value, self.value > threshold
 
 
-def corrected_forecast(y_lstm, flag_value, active, pm, ps, peak_size, alpha):
+def corrected_forecast(y_lstm, flag_value, active, pm, ps, peak_size, alpha, y_range=(1, 5)):
     """Move the LSTM forecast towards pm + peak_size * ps, in proportion to the flag."""
     correction = 0.0
     if active and not np.isnan(ps) and ps > 0.01:
         target_peak = pm + peak_size * ps
         correction = alpha * (target_peak - y_lstm) * flag_value
-    return float(np.clip(y_lstm + correction, 1, 5))
+    return float(np.clip(y_lstm + correction, *y_range))
 
 
-def calibrate_flag_params(users, peak_size):
+def calibrate_flag_params(users, peak_size, y_range=(1, 5)):
     """Grid search of decay, thresholds and alpha on the training users (LUO): lowest
     peak-week error with at most 45% of flagged weeks. The personal mean stands in for
     the LSTM forecast. Returns None if no combination is admissible."""
@@ -65,7 +65,7 @@ def calibrate_flag_params(users, peak_size):
                             fv, active = flag.update(p)
                             flagged[i] = active
                             y_pred[i] = corrected_forecast(u["y_lstm_approx"][i], fv, active,
-                                                           u["pm"][i], u["ps"][i], peak_size, alpha)
+                                                           u["pm"][i], u["ps"][i], peak_size, alpha, y_range)
                         err = np.abs(u["y_true"] - y_pred)
                         errors.extend(err.tolist())
                         with np.errstate(invalid="ignore", divide="ignore"):

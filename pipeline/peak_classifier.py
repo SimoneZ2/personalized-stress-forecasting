@@ -128,7 +128,8 @@ class PeakClassifierData:
     def peak_size(self, train_uids, cutoff):
         """Mean deviation of peak weeks among training users before the cutoff (beta)."""
         r = self.rows[self.rows["uid"].isin({str(u) for u in train_uids})]
-        r = r[(r["week_start"] < cutoff) & (r["target_date"] < cutoff)]
+        if cutoff is not None:
+            r = r[(r["week_start"] < cutoff) & (r["target_date"] < cutoff)]
         devs = []
         for _, g in r.groupby("uid", sort=False):
             s = g["y"].values
@@ -150,7 +151,8 @@ class PeakClassifierData:
         users before the cutoff, for the calibration of the adaptive thresholds."""
         r = self.rows.assign(pm=self.pm, ps=self.ps)
         r = r[r["uid"].isin({str(u) for u in train_uids})]
-        r = r[(r["week_start"] < cutoff) & (r["target_date"] < cutoff)]
+        if cutoff is not None:
+            r = r[(r["week_start"] < cutoff) & (r["target_date"] < cutoff)]
         users = []
         for uid, g in r.groupby("uid", sort=False):
             if len(g) < min_rows:
@@ -165,11 +167,12 @@ class PeakClassifierData:
 
 
 def fit_peak_classifier(frame, train_uids, cutoff):
-    """GBM on the training users' rows whose target precedes the cutoff, with
+    """GBM on the training users' rows whose target precedes the cutoff (all rows if None), with
     class-balanced weights and missing values imputed with the training medians."""
     feat_cols = [c for c in frame.columns if c not in META_COLS]
     train = frame[frame["uid"].isin({str(u) for u in train_uids})]
-    train = train[(train["week_start"] < cutoff) & (train["target_date"] < cutoff)]
+    if cutoff is not None:
+        train = train[(train["week_start"] < cutoff) & (train["target_date"] < cutoff)]
     train = train[train["is_peak_next"].notna()]
     if len(train) < 50 or train["is_peak_next"].sum() < 5:
         return None, feat_cols, None

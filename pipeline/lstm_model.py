@@ -31,12 +31,12 @@ def _impute(x, col_med):
 
 
 def train_global(X_tr, y_tr, n_features, device, hidden_size=64, dropout=0.3, lr=1e-3,
-                 max_epochs=100, batch_size=256, patience=15):
+                 max_epochs=100, batch_size=256, patience=15, huber_delta=1.0):
     """Population model; the last 15% of the training rows is used for early stopping.
     Returns the model and the per-feature training medians used for imputation."""
     model = StressLSTM(n_features, hidden_size, dropout).to(device)
     opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=1e-4)
-    crit = nn.HuberLoss(delta=1.0)
+    crit = nn.HuberLoss(delta=huber_delta)
 
     n_val = max(1, int(len(X_tr) * 0.15))
     X_fit, y_fit = X_tr[:-n_val].copy(), y_tr[:-n_val].copy()
@@ -76,7 +76,7 @@ def train_global(X_tr, y_tr, n_features, device, hidden_size=64, dropout=0.3, lr
     return model, col_med, best_val
 
 
-def finetune_user(model, x_seq, y_value, col_med, device, inplace=False):
+def finetune_user(model, x_seq, y_value, col_med, device, inplace=False, huber_delta=1.0):
     """Two-phase update on one (sequence, self-report) pair. With inplace=False the
     model is copied first, so the population model is never modified."""
     user_model = model if inplace else copy.deepcopy(model)
@@ -84,7 +84,7 @@ def finetune_user(model, x_seq, y_value, col_med, device, inplace=False):
 
     X_t = torch.tensor(_impute(x_seq, col_med)[np.newaxis], dtype=torch.float32).to(device)
     y_t = torch.tensor([float(y_value)], dtype=torch.float32).to(device)
-    crit = nn.HuberLoss(delta=1.0)
+    crit = nn.HuberLoss(delta=huber_delta)
 
     for p in user_model.lstm.parameters():
         p.requires_grad = False
@@ -108,8 +108,8 @@ def finetune_user(model, x_seq, y_value, col_med, device, inplace=False):
     return user_model
 
 
-def predict_one(model, x_seq, col_med, device):
+def predict_one(model, x_seq, col_med, device, y_range=(1.0, 5.0)):
     model.eval()
     x = torch.tensor(_impute(x_seq, col_med)[np.newaxis], dtype=torch.float32).to(device)
     with torch.no_grad():
-        return float(np.clip(model(x).item(), 1.0, 5.0))
+        return float(np.clip(model(x).item(), *y_range))
