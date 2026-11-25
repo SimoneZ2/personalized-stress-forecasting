@@ -21,3 +21,5 @@ venv/
 
 # data needed to reproduce the I-HOPE run of the paper
 !comparisons/ihope/ihope_rows.csv
+results/
+*.npz

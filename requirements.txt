@@ -1,0 +1,12 @@
+# Versions used to produce the results of the paper (Python 3.12.7).
+# torch: the paper's runs used the CUDA 12.1 build, install it with
+#   pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+# tensorflow is needed only by the I-HOPE reimplementation (comparisons/ihope).
+numpy==2.4.6
+pandas==3.0.3
+scipy==1.17.1
+scikit-learn==1.8.0
+matplotlib==3.10.9
+torch==2.5.1
+tensorflow==2.21.0
+keras==3.15.0
