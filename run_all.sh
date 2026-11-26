@@ -86,7 +86,8 @@ ssaqs)  # RQ4: transfer to SSAQS (CPU). WF and LUO run in the same process, in t
     python ssaqs/evaluate.py --schema $scheme --data $SSAQS_DIR --input $S/ssaqs_lstm_input_ces.csv \
         --preds $preds --out $S/rq4_eval
   done
-  python ssaqs/rq4_table.py --dir $S/rq4_eval > $R/tables/rq4_table.txt
+  python ssaqs/rq4_table.py --dir $S/rq4_eval > $R/tables/rq4_table_3seeds.txt
+  python ssaqs/rq4_paper_table.py --dir $S/rq4_eval > $R/tables/rq4_table.txt
   python ssaqs/rq4_figure.py --rows $S/rq4_eval/rq4_rows_LUO_seed42__ensemble_forecast_luo_adaptive_preds.csv \
       --out $R/figures
   ;;

@@ -1,9 +1,28 @@
-# CES stress forecasting
+# Personalized Stress Forecasting from Pervasive Sensing and Sparse Self-Reports
 
-Code to reproduce the results of the paper (RQ1-RQ4): next-week stress forecasting from
-passive phone sensing and sparse self-reports on the College Experience Study (CES), with a
-personalized LSTM regressor and a GBM peak classifier that corrects the forecast on the
-weeks flagged as likely peaks.
+This repository contains the code for the article *Personalized Stress Forecasting from
+Pervasive Sensing and Sparse Self-Reports*. It reproduces all the results of the paper
+(RQ1-RQ4).
+
+## Abstract
+
+Mobile and wearable devices offer the opportunity to monitor psychological states such as
+perceived stress, whose prevalence is high and growing especially among young individuals.
+While forecasting periods of high stress would enable preventive actions, the task is
+challenging. Indeed, stress is subjective and person-dependent, behavioral signals are only
+indirect indicators of it, and self-reports needed to personalize the forecasting system are
+burdensome to collect over time. In this paper, we propose a framework for forecasting
+future stress from passive sensing data and sparse self-reports. In particular, our system
+relies on an LSTM regressor operating on sequences of passive sensor data, which is
+personalized through online fine-tuning on self-reports requested once every few weeks. In
+parallel, a gradient boosting classifier is used to estimate the probability of a stress
+peak, defined with respect to the user's usual level, while a Correction module shifts the
+forecast accordingly. Extensive experiments on a large four-year smartphone sensing dataset
+of university students show that our system compares favorably with reference approaches
+despite relying on far fewer self-reports, and substantially reduces the error on peak
+weeks. Additional results on a second dataset, acquired with a commercial wearable device,
+provide preliminary evidence of portability across different student populations and
+sensing modalities.
 
 ## Data
 
@@ -66,7 +85,8 @@ A single step can be run with `bash run_all.sh <step>`. The steps, in order, are
 | Stability across seeds 42-44 | `evaluation/seed_stability.py` | `results/tables/seed_stability.txt` |
 | RQ3, comparison with I-HOPE | `comparisons/ihope/ihope_regressor.py`, `evaluation/rq3_ihope.py` | `results/tables/rq3_ihope.txt` |
 | RQ3, PHQ-4 severity against Gala et al. | `pipeline/run_leave_users_out.py --target phq4`, `comparisons/gala/severity_stacking.py`, `comparisons/gala/evaluate_gala.py` | `results/tables/rq3_gala.txt` |
-| RQ4, SSAQS table | `ssaqs/build_dataset.py`, `ssaqs/run_ensemble.py`, `ssaqs/evaluate.py`, `ssaqs/rq4_table.py` | `results/tables/rq4_table.txt` |
+| RQ4, SSAQS table | `ssaqs/build_dataset.py`, `ssaqs/run_ensemble.py`, `ssaqs/evaluate.py`, `ssaqs/rq4_paper_table.py` | `results/tables/rq4_table.txt` |
+| RQ4, three seeds (mean ± sd), paired tests and detection | `ssaqs/rq4_table.py` | `results/tables/rq4_table_3seeds.txt` |
 | RQ4, SSAQS figure | `ssaqs/rq4_figure.py` | `results/figures/` |
 
 The tables of the paper report seed 42. Seeds 43 and 44 are used only for the stability
