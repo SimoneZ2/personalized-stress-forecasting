@@ -24,6 +24,15 @@ weeks. Additional results on a second dataset, acquired with a commercial wearab
 provide preliminary evidence of portability across different student populations and
 sensing modalities.
 
+## Authors
+
+- **Simone Pinna**, [ORCID 0009-0007-7141-2407](https://orcid.org/0009-0007-7141-2407), simone.pinna2@unica.it
+- **Silvia Maria Massa**, [ORCID 0000-0002-3285-8971](https://orcid.org/0000-0002-3285-8971)
+- **Diego Reforgiato Recupero**, [ORCID 0000-0001-8646-6183](https://orcid.org/0000-0001-8646-6183)
+- **Daniele Riboni**, [ORCID 0000-0002-0695-2040](https://orcid.org/0000-0002-0695-2040)
+
+Department of Mathematics and Computer Science, University of Cagliari, Italy.
+
 ## Data
 
 The datasets are not included and must be requested from their owners.
