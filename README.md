@@ -7,7 +7,7 @@ Pervasive Sensing and Sparse Self-Reports*. It reproduces all the results of the
 ## Abstract
 
 Mobile and wearable devices offer the opportunity to monitor psychological states such as
-perceived stress, whose prevalence is high and growing especially among young individuals.
+perceived stress, whose prevalence is high and growing, especially among young individuals.
 While forecasting periods of high stress would enable preventive actions, the task is
 challenging. Indeed, stress is subjective and person-dependent, behavioral signals are only
 indirect indicators of it, and self-reports needed to personalize the forecasting system are
@@ -101,7 +101,7 @@ analysis and, in RQ4, by the evaluation script.
   - `lstm_model.py`: global LSTM and per-user online fine-tuning.
   - `peak_classifier.py`: GBM peak classifier.
   - `correction.py`: adaptive flag and peak-only correction.
-  - `policy.py`: self-report policy (two onboarding reports, then one every 28 days).
+  - `policy.py`: self-report policy (two onboarding reports, then one every four calendar weeks).
   - `run_walk_forward.py`, `run_leave_users_out.py`: the two evaluation schemes.
 - `evaluation/`: tables, tests and figures of RQ1-RQ2 and the I-HOPE comparison.
 - `comparisons/`: the I-HOPE reimplementation and the PHQ-4 comparison with Gala et al.
